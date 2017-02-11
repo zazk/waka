@@ -1,0 +1,5 @@
+<% @menus.each do |item| %>
+  <div>Nombre: <%=item.name%> 
+    <%= link_to 'Show', menu_path(item) %>
+  </div>
+<% end %>
