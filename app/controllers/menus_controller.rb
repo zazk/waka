@@ -30,7 +30,16 @@ class MenusController < ApplicationController
     end
 
     def makemenu
+        #Bypass
+        if 1==1
+            render 'makemenu' and return
+        end
+        
+        #Remove Duplicate 
+        ids = Menu.select("MIN(id) as id").group(:name).collect(&:id)
+        Menu.where.not(id:ids).destroy_all
 
+        # Insert from a text file
         @list = Array.new 
         points = Random.new
 
