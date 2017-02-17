@@ -30,39 +30,64 @@ class MenusController < ApplicationController
     end
 
     def makemenu
-        #Bypass
-        if 1==1
-            render 'makemenu' and return
-        end
-        
-        #Remove Duplicate 
-        ids = Menu.select("MIN(id) as id").group(:name).collect(&:id)
-        Menu.where.not(id:ids).destroy_all
 
-        # Insert from a text file
-        @list = Array.new 
-        points = Random.new
+        render 'makemenu' and return
 
-        IO.foreach( Rails.root.join('app/assets/menus.txt') ) do |line|  
-              
-            @list.push(line)
-            @menu = Menu.new
-            @menu.name = line
-            @menu.points = points.rand(10..20)
-            if @menu.save
-                print "Menu:" + line + "Saved"
-            else
-                print "Menu can't saved"
-            end
-            print line
-        end
-        print "Menu Total:" + @list.count.to_s
-        @list.push("go final")
     end 
 
     private 
         def menu_params
             params.require(:menu).permit(:name,:description,:points)
+        end
+    
+    private 
+        def insert_from_textfile
+            # Insert from a text file
+            @list = Array.new 
+            points = Random.new
+
+            IO.foreach( Rails.root.join('app/assets/menus.txt') ) do |line|  
+                
+                @list.push(line)
+                @menu = Menu.new
+                @menu.name = line
+                @menu.points = points.rand(10..20)
+                if @menu.save
+                    print "Menu:" + line + "Saved"
+                else
+                    print "Menu can't saved"
+                end 
+            end
+            print "Menu Total:" + @list.count.to_s
+        end
+
+    private 
+        def insert_from_csvfile
+
+            # Insert from a cvs file
+            
+            IO.foreach( Rails.root.join('app/assets/entradas.csv') ) do |line|
+                name, type =  line.split(',')
+                puts name
+                puts type
+                puts "-------"
+
+                menu = Menu.new
+                menu.name = name
+                menu.kind = type
+
+                if menu.save
+                    puts 'Menu:' + menu.name + ' saved!'
+                end 
+                
+            end
+        end
+    
+    private
+        def remove_duplicatesm 
+            #Remove Duplicate 
+            ids = Menu.select("MIN(id) as id").group(:name).collect(&:id)
+            Menu.where.not(id:ids).destroy_all
         end
 
 end
