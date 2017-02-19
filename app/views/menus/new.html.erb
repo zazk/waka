@@ -1,32 +1,6 @@
 <h1>Add Menu</h1>
-<%= form_for :menu, url: menus_path do |f| %>
-    <% if @menu.errors.any? %>
-    <div class="error_explanation">
-    <h2>
-        <%=pluralize(@menu.errors.count, 'error') %>
-        prohibited this article from being saved.
-    </h2>
-    <% @menu.errors.full_messages.each do |msg| %>
-        <div><%= msg %></div>
-    <% end %>
-    </div>
-    <% end %>
-    <p>
-        <%= f.label :name %>  <br>
-        <%= f.text_field :name %>
-    </p>
-    <p>
-        <%= f.label :points %> <br>
-        <%= f.number_field :points %>
-    </p>
-    <p>
-        <%= f.label :description %> <br>
-        <%= f.text_area :description %>
-    </p>
-    <p>
-        <%= f.submit%>
-    </p>
-    <div>
-    <%= link_to 'Menus', menus_path %>
-    </div>
-<% end %>
+<%= render 'form' %>
+
+<div>
+<%= link_to 'Menus', menus_path %>
+</div> 

@@ -1,10 +1,29 @@
-<% @menus.each do |item| %>
-  <div>Nombre: <%=item.name%> 
-    <%= link_to 'Show', menu_path(item) %>
-    <%= link_to 'Remove', menu_path(item), 
-      method: :delete, 
-      data: {confirm:'Are you shure?'} %>
-  </div>
-<% end %>
+<table>
+  <thead>
+    <th>Name</th>
+    <th>Points</th>
+    <th>Kind</th>
+    <th>Meat</th>
+    <th>Actions</th>
+  </thead>
+  <tbody>
 
+    <% @menus.each do |item| %>
+    <tr>
+      <td><%=item.name%> </td>
+    <td>Points: <%=item.points%></td>
+      <td><%=item.kind%></td>
+      <td><%=item.meat%></td>
+      <td>
+       <%= link_to 'Show', menu_path(item) %>
+        <%= link_to 'Edit', edit_menu_path(item) %>
+        <%= link_to 'Remove', menu_path(item), 
+          method: :delete, 
+          data: {confirm:'Are you shure?'} %>
+      </td>
+    </tr>
+    <% end %>
+
+  </tbody>
+</table>
 <div><%= link_to 'Create Menu', new_menu_path %></div>

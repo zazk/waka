@@ -1,6 +1,7 @@
 class MenusController < ApplicationController
 
     def index
+
         @menus = Menu.all
         
     end
@@ -11,6 +12,19 @@ class MenusController < ApplicationController
 
     def show
         @menu = Menu.find( params[:id] )
+    end
+
+    def edit
+        @menu = Menu.find( params[:id] ) 
+    end
+
+    def update
+        @menu = Menu.find( params[:id] )
+        if @menu.update( menu_params )
+            redirect_to @menu
+        else
+            render 'edit'
+        end
     end
 
     def create
@@ -37,7 +51,7 @@ class MenusController < ApplicationController
 
     private 
         def menu_params
-            params.require(:menu).permit(:name,:description,:points)
+            params.require(:menu).permit(:name,:description,:points,:kind,:meat)
         end
     
     private 
