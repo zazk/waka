@@ -2,6 +2,10 @@ Rails.application.routes.draw do
   resources :reports
   get 'home/index'
 
+  namespace :api do 
+    jsonapi_resources :menus
+  end
+
   resources :menus do
     collection do
       get 'makemenu'
