@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   resources :reports
+  
   get 'home/index'
+  get 'home/about'
 
   namespace :api do 
     jsonapi_resources :menus
